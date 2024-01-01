@@ -16,7 +16,6 @@ class ToScrapeSpiderXPath(scrapy.Spider):
                 'tags': quote.xpath('.//div[@class="tags"]/a[@class="tag"]/text()').extract()
             }
 
-        next_page_url = response.xpath('//li[@class="next"]/a/@href').extract_first()
-        if next_page_url is not None:
+        if (next_page_url := response.xpath('//li[@class="next"]/a/@href').extract_first()) is not None:
             yield scrapy.Request(response.urljoin(next_page_url))
 

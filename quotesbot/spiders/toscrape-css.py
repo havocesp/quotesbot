@@ -16,7 +16,6 @@ class ToScrapeCSSSpider(scrapy.Spider):
                 'tags': quote.css("div.tags > a.tag::text").extract()
             }
 
-        next_page_url = response.css("li.next > a::attr(href)").extract_first()
-        if next_page_url is not None:
+        if (next_page_url := response.css("li.next > a::attr(href)").extract_first()) is not None:
             yield scrapy.Request(response.urljoin(next_page_url))
 
